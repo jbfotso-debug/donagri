@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matériel agricole gratuit — Initiative francophone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  :root {
+    --green-deep: #1E3A0F;
+    --green-mid:  #3B6D11;
+    --green-soft: #7AB648;
+    --green-pale: #EAF3DE;
+    --amber:      #D4870A;
+    --amber-pale: #FAEEDA;
+    --earth:      #6B4E2A;
+    --cream:      #F8F4EE;
+    --white:      #FFFFFF;
+    --text-main:  #1C1C1A;
+    --text-muted: #6B6860;
+    --text-light: #9C9A94;
+    --border:     rgba(30,58,15,0.12);
+    --radius-sm:  8px;
+    --radius-md:  12px;
+    --radius-lg:  20px;
+    --shadow-sm:  0 2px 12px rgba(30,58,15,0.08);
+    --shadow-md:  0 8px 32px rgba(30,58,15,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-main);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 10% 20%, rgba(122,182,72,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 90% 80%, rgba(212,135,10,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+  /* Header */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--green-deep);
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: var(--green-pale);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-icon i { font-size: 18px; color: var(--green-mid); }
+  .lang-badge {
+    font-size: 12px; font-weight: 500;
+    color: var(--green-mid);
+    background: var(--green-pale);
+    padding: 5px 14px; border-radius: 999px;
+    border: 1px solid rgba(59,109,17,0.2);
+  }
+
+  /* Hero */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    margin-bottom: 3rem;
+  }
+  @media (max-width: 680px) {
+    .hero { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  .hero-left { padding-top: 0.5rem; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 1.25rem;
+  }
+  .eyebrow i { font-size: 14px; }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--green-deep);
+    margin-bottom: 1.25rem;
+  }
+  h1 em { font-style: italic; color: var(--green-mid); }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+
+  .trust-items { display: flex; flex-direction: column; gap: 10px; }
+  .trust-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--text-muted);
+  }
+  .trust-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green-soft); flex-shrink: 0;
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: flex; gap: 1.5rem;
+    margin-top: 2rem; padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .stat-item { text-align: left; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; color: var(--green-mid);
+    display: block; line-height: 1;
+  }
+  .stat-lbl { font-size: 11px; color: var(--text-light); margin-top: 2px; display: block; }
+
+  /* Form card */
+  .form-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+    padding: 1.75rem;
+    position: sticky;
+    top: 1.5rem;
+  }
+
+  .tabs {
+    display: flex; gap: 6px;
+    background: var(--cream);
+    border-radius: var(--radius-md);
+    padding: 4px;
+    margin-bottom: 1.25rem;
+  }
+  .tab {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 8px; border-radius: calc(var(--radius-md) - 2px);
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    color: var(--text-muted); transition: all 0.2s; border: none;
+    background: transparent; font-family: 'DM Sans', sans-serif;
+  }
+  .tab.active { background: var(--white); color: var(--green-deep); box-shadow: var(--shadow-sm); }
+  .tab i { font-size: 15px; }
+
+  .profile-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 999px;
+    margin-bottom: 1rem;
+  }
+  .pill-agri { background: var(--green-pale); color: #27500A; }
+  .pill-elev { background: var(--amber-pale); color: #633806; }
+
+  .field { margin-bottom: 0.75rem; }
+  .field label {
+    display: block; font-size: 12px; font-weight: 500;
+    color: var(--text-muted); margin-bottom: 4px;
+  }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px; color: var(--text-main);
+    background: var(--white); font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--green-soft);
+    box-shadow: 0 0 0 3px rgba(122,182,72,0.15);
+  }
+  .field textarea { resize: vertical; min-height: 60px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .btn-submit {
+    width: 100%; padding: 12px;
+    background: var(--green-deep);
+    color: var(--white); border: none;
+    border-radius: var(--radius-sm);
+    font-size: 14px; font-weight: 500;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 1rem;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-submit:hover { background: var(--green-mid); }
+  .btn-submit:active { transform: scale(0.99); }
+  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .privacy {
+    font-size: 11px; color: var(--text-light);
+    text-align: center; margin-top: 0.6rem;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+  }
+
+  .spinner {
+    display: inline-block; width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff; border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Success */
+  .success-state { display: none; text-align: center; padding: 1.5rem 0.5rem; }
+  .success-icon {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--green-pale);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+  }
+  .success-icon i { font-size: 26px; color: var(--green-mid); }
+  .success-state h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 400;
+    color: var(--green-deep); margin-bottom: 0.5rem;
+  }
+  .success-state p { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+  .status-bar {
+    font-size: 12px; padding: 7px 12px;
+    border-radius: var(--radius-sm);
+    margin-top: 0.5rem; text-align: center; display: none;
+  }
+  .status-ok { background: var(--green-pale); color: #27500A; }
+  .status-err { background: #FCEBEB; color: #791F1F; }
+
+  /* Features section */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 400;
+    color: var(--green-deep); margin-bottom: 1.25rem;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem; margin-bottom: 3rem;
+  }
+  @media (max-width: 560px) { .features { grid-template-columns: 1fr; } }
+
+  .feat {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+  }
+  .feat-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--green-pale);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 0.75rem;
+  }
+  .feat-icon i { font-size: 20px; color: var(--green-mid); }
+  .feat h3 { font-size: 14px; font-weight: 500; color: var(--text-main); margin-bottom: 4px; }
+  .feat p { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-light);
+  }
+  footer a { color: var(--green-mid); text-decoration: none; }
+
+  /* Fade-in animation */
+  .fade-in { opacity: 0; transform: translateY(16px); animation: fadeUp 0.5s ease forwards; }
+  @keyframes fadeUp { to { opacity: 1; transform: none; } }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="fade-in">
+    <div class="logo">
+      <div class="logo-icon"><i class="ti ti-leaf"></i></div>
+      DonAgri
+    </div>
+    <span class="lang-badge">🌍 Réseau francophone</span>
+  </header>
+
+  <div class="hero">
+    <div class="hero-left fade-in delay-1">
+      <div class="eyebrow"><i class="ti ti-heart-handshake"></i> Initiative solidaire</div>
+      <h1>Du matériel offert à ceux qui <em>travaillent la terre</em></h1>
+      <p class="hero-desc">Des donateurs du monde francophone souhaitent transmettre leur matériel agricole et d'élevage directement à ceux qui en ont besoin. Sans intermédiaire. Sans frais.</p>
+
+      <div class="trust-items">
+        <div class="trust-item"><span class="trust-dot"></span> Mise en relation directe donateur ↔ bénéficiaire</div>
+        <div class="trust-item"><span class="trust-dot"></span> Coordonnées strictement confidentielles</div>
+        <div class="trust-item"><span class="trust-dot"></span> Service 100% gratuit, aucune commission</div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-item">
+          <span class="stat-num" id="cpt-agri">0</span>
+          <span class="stat-lbl">agriculteurs inscrits</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" id="cpt-elev">0</span>
+          <span class="stat-lbl">éleveurs inscrits</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">5+</span>
+          <span class="stat-lbl">pays couverts</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulaire -->
+    <div class="form-card fade-in delay-2">
+      <div class="tabs">
+        <button class="tab active" id="tab-agri" onclick="switchTab('agri')">
+          <i class="ti ti-plant-2"></i> Agriculteur
+        </button>
+        <button class="tab" id="tab-elev" onclick="switchTab('elev')">
+          <i class="ti ti-meat"></i> Éleveur
+        </button>
+      </div>
+
+      <div id="form-state">
+        <div id="pill-agri" class="profile-pill pill-agri">
+          <i class="ti ti-plant-2" style="font-size:13px"></i> Inscription agriculteur
+        </div>
+        <div id="pill-elev" class="profile-pill pill-elev" style="display:none">
+          <i class="ti ti-meat" style="font-size:13px"></i> Inscription éleveur
+        </div>
+
+        <div class="row">
+          <div class="field"><label>Prénom *</label><input type="text" id="prenom" placeholder="Marie" autocomplete="given-name"></div>
+          <div class="field"><label>Nom</label><input type="text" id="nom" placeholder="Dupont" autocomplete="family-name"></div>
+        </div>
+        <div class="field"><label>Adresse email *</label><input type="email" id="email" placeholder="marie@ferme.com" autocomplete="email"></div>
+        <div class="field"><label>Téléphone</label><input type="tel" id="tel" placeholder="+33 6 00 00 00 00" autocomplete="tel"></div>
+        <div class="row">
+          <div class="field">
+            <label>Pays *</label>
+            <select id="pays">
+              <option value="">— Choisir —</option>
+              <option>France</option>
+              <option>Belgique</option>
+              <option>Québec (Canada)</option>
+              <option>Suisse</option>
+              <option>Luxembourg</option>
+              <option>Sénégal</option>
+              <option>Mali</option>
+              <option>Burkina Faso</option>
+              <option>Côte d'Ivoire</option>
+              <option>Cameroun</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="field">
+            <label id="besoin-label">Matériel recherché</label>
+            <select id="materiel">
+              <option value="">— Type —</option>
+              <option>Outils manuels</option>
+              <option>Machines agricoles</option>
+              <option>Semences</option>
+              <option>Irrigation</option>
+              <option>Stockage</option>
+              <option>Autre matériel</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Décrivez votre besoin (optionnel)</label>
+          <textarea id="description" placeholder="Ex : Je cherche un semoir d'occasion pour 3 hectares..."></textarea>
+        </div>
+
+        <button class="btn-submit" id="btn-submit" onclick="handleSubmit()">
+          <i class="ti ti-send"></i>
+          Je rejoins la liste d'attente
+        </button>
+        <div class="status-bar" id="status-bar"></div>
+        <p class="privacy"><i class="ti ti-lock" style="font-size:12px"></i> Coordonnées confidentielles — jamais revendues</p>
+      </div>
+
+      <div class="success-state" id="success-state">
+        <div class="success-icon"><i class="ti ti-check"></i></div>
+        <h3>Inscription confirmée !</h3>
+        <p>Merci de nous faire confiance. Votre inscription a bien été enregistrée.<br><br>Vous serez contacté dès qu'un don correspond à votre région et vos besoins. Pensez à vérifier vos spams.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <p class="section-title fade-in delay-3">Comment ça fonctionne</p>
+  <div class="features fade-in delay-3">
+    <div class="feat">
+      <div class="feat-icon"><i class="ti ti-clipboard-list"></i></div>
+      <h3>1. Inscrivez-vous</h3>
+      <p>Remplissez le formulaire en indiquant votre profil, votre pays et le type de matériel dont vous avez besoin.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon"><i class="ti ti-mail-forward"></i></div>
+      <h3>2. Nous vous contactons</h3>
+      <p>Dès qu'un donateur propose du matériel correspondant à votre région et vos besoins, vous êtes notifié.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon"><i class="ti ti-heart-handshake"></i></div>
+      <h3>3. Contact direct</h3>
+      <p>Vous êtes mis en contact direct avec le donateur. Pas d'intermédiaire, pas de frais, juste de la solidarité.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 DonAgri — Initiative solidaire francophone &nbsp;·&nbsp; <a href="mailto:contact@donagri.org">contact@donagri.org</a></p>
+    <p style="margin-top:6px">Vos données sont collectées uniquement pour la mise en relation avec des donateurs.</p>
+  </footer>
+
+</div>
+
+<script>
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyXVGMDLDXBEZ17AHR__eoX_3TAFXTMpF02xugYWK_AUGzl14rTcFMOaFYZlEc7ZRWzIA/exec';
+let currentTab = 'agri';
+let cptAgri = 0;
+let cptElev = 0;
+
+const agriOptions = ['Outils manuels','Machines agricoles','Semences','Irrigation','Stockage','Autre matériel'];
+const elevOptions = ["Clôtures et enclos","Abreuvoirs et mangeoires","Matériel de traite","Équipements vétérinaires","Transport d'animaux","Foin / stockage fourrage","Autre équipement"];
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('tab-agri').className = 'tab' + (tab==='agri' ? ' active' : '');
+  document.getElementById('tab-elev').className = 'tab' + (tab==='elev' ? ' active' : '');
+  document.getElementById('pill-agri').style.display = tab==='agri' ? 'inline-flex' : 'none';
+  document.getElementById('pill-elev').style.display = tab==='elev' ? 'inline-flex' : 'none';
+  document.getElementById('besoin-label').textContent = tab==='agri' ? 'Matériel recherché' : 'Équipement recherché';
+  const sel = document.getElementById('materiel');
+  const opts = tab==='agri' ? agriOptions : elevOptions;
+  sel.innerHTML = '<option value="">— Type —</option>';
+  opts.forEach(o => { const op = document.createElement('option'); op.textContent = o; sel.appendChild(op); });
+  document.getElementById('description').placeholder = tab==='agri'
+    ? "Ex : Je cherche un semoir d'occasion pour 3 hectares..."
+    : "Ex : Je cherche des abreuvoirs pour un troupeau de 20 bovins...";
+}
+
+function showStatus(msg, type) {
+  const el = document.getElementById('status-bar');
+  el.textContent = msg;
+  el.className = 'status-bar ' + (type==='ok' ? 'status-ok' : 'status-err');
+  el.style.display = 'block';
+}
+
+async function handleSubmit() {
+  const prenom = document.getElementById('prenom').value.trim();
+  const email  = document.getElementById('email').value.trim();
+  const pays   = document.getElementById('pays').value;
+  if (!prenom || !email || !pays) {
+    alert('Merci de remplir au moins votre prénom, email et pays.');
+    return;
+  }
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Envoi en cours...';
+
+  const now = new Date();
+  const date = now.toLocaleDateString('fr-FR') + ' ' + now.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+
+  const payload = {
+    date,
+    profil:      currentTab === 'agri' ? 'agriculteur' : 'éleveur',
+    prenom,
+    nom:         document.getElementById('nom').value.trim(),
+    email,
+    tel:         document.getElementById('tel').value.trim(),
+    pays,
+    materiel:    document.getElementById('materiel').value,
+    description: document.getElementById('description').value.trim()
+  };
+
+  try {
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (currentTab === 'agri') { cptAgri++; document.getElementById('cpt-agri').textContent = cptAgri; }
+    else { cptElev++; document.getElementById('cpt-elev').textContent = cptElev; }
+    document.getElementById('form-state').style.display = 'none';
+    document.getElementById('success-state').style.display = 'block';
+  } catch(err) {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ti ti-send"></i> Je rejoins la liste d\'attente';
+    showStatus('Erreur de connexion. Veuillez réessayer.', 'err');
+  }
+}
+</script>
+</body>
+</html>
